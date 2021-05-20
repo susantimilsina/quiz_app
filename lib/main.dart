@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'Question.dart';
 import 'answer.dart';
+import 'restartscreen.dart';
 
 void main() {
   runApp(MyApp2());
@@ -78,32 +79,18 @@ class _MyApp2State extends State<MyApp2> {
           ),
         ),
         body: (questionIndex >= questions.length)
-            ? Container(
-                height: double.infinity,
-                width: double.infinity,
-                child: Column(
-                  children: [
-                    Text("${checkyou}"),
-                    FlatButton(
-                      onPressed: restart,
-                      child: Text(
-                        "Restart",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      color: Colors.red,
-                    ),
-                  ],
-                ),
+            ? RestartPage(
+                text: checkyou,
+                onPresssHandler: restart,
               )
             : Column(
                 children: [
                   QuestionText(questions[questionIndex]["Question"]),
                   ...(questions[questionIndex]["Answer"] as List<dynamic>)
                       .map((answer) {
-                    return Answer((){
-                           onPressedAnswer(answer["score"]);
-                    },
-                        answer["text"].toString());
+                    return Answer(() {
+                      onPressedAnswer(answer["score"]);
+                    }, answer["text"].toString());
                   }).toList(),
                 ],
               ),
@@ -111,7 +98,3 @@ class _MyApp2State extends State<MyApp2> {
     );
   }
 }
-
-
-
-
